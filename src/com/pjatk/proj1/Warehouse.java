@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Warehouse {
-    List<String> list = new ArrayList<>();
+    List<ContainerInterface> warehouse = new ArrayList<>();
 
 
-    public void AddContainer(String s){
-        list.add(s);
+    public void addContainer(ContainerInterface containerInterface){
+        warehouse.add(containerInterface);
     }
-
 
 }

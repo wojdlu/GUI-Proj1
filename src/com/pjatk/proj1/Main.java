@@ -1,5 +1,8 @@
 package com.pjatk.proj1;
 
+import com.pjatk.proj1.containers.BasicContainer;
+import com.pjatk.proj1.containers.ContainerInterface;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -9,6 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         Port port = new Port();
+        Warehouse warehouse = new Warehouse();
         while(true){
             int x = menu();
             if(x==6)
@@ -18,6 +22,7 @@ public class Main {
                     port.addShip(newShip());
                     break;
                 case 2:
+                    warehouse.addContainer(newContainer());
                     break;
                 case 3:
                     break;
@@ -58,5 +63,30 @@ public class Main {
         int maxE = scanner.nextInt();
         Ship ship = new Ship(maxTE, maxH, maxE, maxA, maxAW, name);
         return ship;
+    }
+    static ContainerInterface newContainer(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("podaj wagę netto kontenera:");
+        double weightNetto = scanner.nextDouble();
+        System.out.println("podaj wagę brutto kontenera:");
+        double weightBrutto = scanner.nextDouble();
+        System.out.println("Jaki kontener chcesz stworzyć:");
+        System.out.println("1. Podstawowy");
+        System.out.println("2. Ciężki");
+        System.out.println("3. Chłodniczy");
+        System.out.println("4. kontener na materiały ciekłe");
+        System.out.println("6. kontener na materiały wybuchowe");
+        System.out.println("6. kontener na materiały toksyczne");
+        System.out.print("Wpisz cyfrę odpowiadającą opcji: ");
+        int y = scanner.nextInt();
+        switch (y){
+            case 1:
+                BasicContainer bc = new BasicContainer(weightNetto, weightBrutto);
+                return bc;
+            default:
+                BasicContainer bs = new BasicContainer(weightNetto, weightBrutto);
+                return bs;
+        }
+
     }
 }
