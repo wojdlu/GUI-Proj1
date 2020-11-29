@@ -1,11 +1,34 @@
 package com.pjatk.proj1.containers;
 
-import java.util.UUID;
+import com.pjatk.proj1.Sender;
+
 
 public class ToxicLooseContainer extends HeavyContainer implements ContainerInterface{
-    private final UUID ID = UUID.randomUUID();
 
-    public ToxicLooseContainer(double weightNetto, double weightBrutto) {
-        super(weightNetto, weightBrutto);
+    private double grainSize;
+
+    public ToxicLooseContainer(double weightNetto, double weightBrutto, Sender sender, double grainSize) {
+        super(weightNetto, weightBrutto, sender);
+        this.grainSize = grainSize;
     }
+
+    public ToxicLooseContainer(double weightNetto, double weightBrutto, Sender sender) {
+        super(weightNetto, weightBrutto, sender);
+    }
+
+    public double getWeight() {
+        return weightBrutto;
+    }
+
+    @Override
+    public String toString() {
+        return "ToxicLooseContainer{" +
+                "grainSize=" + grainSize +
+                ", weightNetto=" + weightNetto +
+                ", weightBrutto=" + weightBrutto +
+                ", ID=" + ID +
+                ", sender=" + sender +
+                '}';
+    }
+
 }

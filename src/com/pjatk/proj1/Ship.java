@@ -1,5 +1,9 @@
 package com.pjatk.proj1;
 
+import com.pjatk.proj1.containers.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Ship {
@@ -14,6 +18,10 @@ public class Ship {
     private String homePort;
     private String destinationPort;
     private String startingPort;
+    private int weight;
+
+    List<ContainerInterface> containers = new ArrayList<>();
+
 
     public Ship(int MAX_TOXIC_EXPLOSIVE_CONTAINERS, int MAX_HEAVY_CONTAINERS, int MAX_ELECTRIC_CONTAINERS, int MAX_ALL_CONTAINERS, int MAX_WEIGHT, String NAME) {
         this.MAX_TOXIC_EXPLOSIVE_CONTAINERS = MAX_TOXIC_EXPLOSIVE_CONTAINERS;
@@ -24,56 +32,43 @@ public class Ship {
         this.NAME = NAME;
     }
 
-    public int getMAX_TOXIC_EXPLOSIVE_CONTAINERS() {
-        return MAX_TOXIC_EXPLOSIVE_CONTAINERS;
-    }
+    private int heavyConunter = 0;
+    private int toxicCounter = 0;
+    private int electricCounter = 0;
 
-    public int getMAX_HEAVY_CONTAINERS() {
-        return MAX_HEAVY_CONTAINERS;
-    }
+    public void addContainer(ContainerInterface container){
+        for(ContainerInterface x : containers){
+            weight += x.getWeight();
+        }
+        weight += container.getWeight();
 
-    public int getMAX_ELECTRIC_CONTAINERS() {
-        return MAX_ELECTRIC_CONTAINERS;
-    }
+        if(containers.size() < MAX_ALL_CONTAINERS && weight < MAX_WEIGHT) {
+            if (container instanceof ExplosivesContainer || container instanceof ToxicLooseContainer || container instanceof ToxicLiquidsContainers) {
+                if(toxicCounter < MAX_TOXIC_EXPLOSIVE_CONTAINERS){
+                    containers.add(container);
+                    toxicCounter++;
+                }else {
+                    System.out.println("Statek nie pomieści więcej kontenerów z materiałami toksycznymi lub wybuchowymi ");
+                }
+            } else if(container instanceof RefrigeratedContainer){
+                if(electricCounter < MAX_ELECTRIC_CONTAINERS){
+                    containers.add(container);
+                    electricCounter++;
+                }else {
+                    System.out.println("Statek nie pomieści więcej kontenerów, które muszą być podłączone do sieci elektrycznej");
+                }
+            }else if (container instanceof HeavyContainer) {
+                if (heavyConunter < MAX_HEAVY_CONTAINERS) {
+                    containers.add(container);
+                    heavyConunter++;
+                } else {
+                    System.out.println("Statek nie pomieści więcej ciężkich kontenerów");
+                }
+            }
+        }else{
+            System.out.println("Statek nie udźwignie więcej ciężaru, lub nie ma na nim już miejsca");
+        }
 
-    public int getMAX_ALL_CONTAINERS() {
-        return MAX_ALL_CONTAINERS;
-    }
-
-    public int getMAX_WEIGHT() {
-        return MAX_WEIGHT;
-    }
-
-    public UUID getUniqueId() {
-        return uniqueId;
-    }
-
-    public String getNAME() {
-        return NAME;
-    }
-
-    public String getHomePort() {
-        return homePort;
-    }
-
-    public void setHomePort(String homePort) {
-        this.homePort = homePort;
-    }
-
-    public String getDestinationPort() {
-        return destinationPort;
-    }
-
-    public void setDestinationPort(String destinationPort) {
-        this.destinationPort = destinationPort;
-    }
-
-    public String getStartingPort() {
-        return startingPort;
-    }
-
-    public void setStartingPort(String startingPort) {
-        this.startingPort = startingPort;
     }
 
     @Override
