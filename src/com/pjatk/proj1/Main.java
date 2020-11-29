@@ -13,45 +13,46 @@ public class Main {
         SenderBase senderBase = new SenderBase();
         Calendar calendar = new Calendar(warehouse, wagon);
         calendar.start();
-        Sender sender1 = new Sender("Paweł", "Reszka", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
+        Sender sender1 = new Sender("Tomasz", "Król", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
         senderBase.addSender(sender1);
         ExplosivesContainer explosivesContainer = new ExplosivesContainer(100, 120, sender1, "II");
         RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1100, 1400, sender1,120);
+        RefrigeratedContainer refrigeratedContainer1 = new RefrigeratedContainer(1100, 1400, sender1,120);
         warehouse.addContainer(explosivesContainer);
         warehouse.addContainer(refrigeratedContainer);
+        warehouse.addContainer(refrigeratedContainer1);
 
         while(true){
-            int x = menu();
-            if(x==8)
-                break;
-            switch (x){
-                case 1:
-                    port.addShip(newShip());
+
+                int x = menu();
+                if (x == 8)
                     break;
-                case 2:
-                    warehouse.addContainer(newContainer(senderBase));
-                    break;
-                case 3:
-                    showShipsAndContainers(port);
-                    break;
-                case 4:
-                    showContainersInWarehouse(warehouse);
-                    break;
-                case 5:
-                    deleteContainer(warehouse);
-                    break;
-                case 6:
-                    moveContainerToShip(warehouse, port, calendar);
-                    break;
-                case 7:
-                    moveContainerToWagonOrWarehouse(warehouse, wagon, port);
-                    break;
-                case 9:
-                    System.out.println(calendar.getDay());
-                    break;
-                default:
-                    menu();
-            }
+                switch (x) {
+                    case 1:
+                        port.addShip(newShip());
+                        break;
+                    case 2:
+                        warehouse.addContainer(newContainer(senderBase));
+                        break;
+                    case 3:
+                        showShipsAndContainers(port);
+                        break;
+                    case 4:
+                        warehouse.showContainers();
+                        break;
+                    case 5:
+                        deleteContainer(warehouse);
+                        break;
+                    case 6:
+                        moveContainerToShip(warehouse, port, calendar);
+                        break;
+                    case 7:
+                        moveContainerToWagonOrWarehouse(warehouse, wagon, port);
+                        break;
+                    default:
+                        menu();
+                }
+
 
 
         }
@@ -176,17 +177,17 @@ public class Main {
     }
 
     static void showShipsAndContainers(Port port){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Istniejące statki: ");
-        port.showShips();
-        System.out.println("Wybierz statek, którego listę kontenerów chcesz zobaczyć i wpisz odpowiadającą cyfrę:");
-        int shipNumber = scanner.nextInt();
-        port.getShip(shipNumber).showContainers();
-    }
+        if(port.getShipList().isEmpty()){
+            System.out.println("Nie ma jeszcze żadnych statków w porcie, które można by wyświetlić");
+        }else {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Istniejące statki: ");
+            port.showShips();
+            System.out.println("Wybierz statek, którego listę kontenerów chcesz zobaczyć i wpisz odpowiadającą cyfrę:");
+            int shipNumber = scanner.nextInt();
+            port.getShip(shipNumber).showContainers();
+        }
 
-    static void showContainersInWarehouse(Warehouse warehouse){
-        System.out.println("Aktualny stan magazynu: ");
-        warehouse.showContainers();
     }
 
     static void deleteContainer(Warehouse warehouse){

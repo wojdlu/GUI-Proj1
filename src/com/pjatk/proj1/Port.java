@@ -16,15 +16,21 @@ public class Port {
 
     public void showShips(){
         int c = 1;
-        for(Ship x: port){
-            System.out.println(c + ". " + x);
-            c++;
-        }
+
+            for (Ship x : port) {
+                System.out.println(c + ". " + x);
+                c++;
+            }
+
     }
 
     public Ship getShip(int x){
         x = x-1;
         return port.get(x);
+    }
+
+    public List<Ship> getShipList(){
+        return port;
     }
 
 

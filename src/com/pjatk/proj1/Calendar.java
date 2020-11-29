@@ -25,13 +25,16 @@ public class Calendar extends Thread {
                 Thread.sleep(5000);
                     day++;
                     warehouse.checkDays(day);
+                    wagon.checkSpace();
 
             }
 
         }catch (Exception e){
-
+            e.printStackTrace();
         }
     }
+
+
 
     public int getDay(){
         return day;

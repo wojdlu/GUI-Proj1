@@ -77,18 +77,27 @@ public class Ship {
                     System.out.println("Statek nie pomieści więcej ciężkich kontenerów");
                     return false;
                 }
+            }else {
+                containers.add(container);
+                return true;
             }
+
         }else{
             System.out.println("Statek nie udźwignie więcej ciężaru, lub nie ma na nim już miejsca");
             return false;
         }
-        return false;
+
     }
 
     public void showContainers(){
-        int c = 1;
-        for(ContainerInterface x: containers){
-            System.out.println(c + ". " + x);
+        if(containers.isEmpty()){
+            System.out.println("Statek jest pusty");
+        }else {
+            int c = 1;
+            for (ContainerInterface x : containers) {
+                System.out.println(c + ". " + x);
+                c++;
+            }
         }
     }
 
@@ -101,6 +110,8 @@ public class Ship {
         x = x -1;
         containers.remove(x);
     }
+
+
 
     @Override
     public String toString() {

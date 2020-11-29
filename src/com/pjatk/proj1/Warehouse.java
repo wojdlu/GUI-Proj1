@@ -7,9 +7,9 @@ import java.util.List;
 
 public class Warehouse {
     List<ContainerInterface> containerList = new ArrayList<>();
-    private ExplosivesContainer ec;
-    private ToxicLiquidsContainers tc;
-    private ToxicLooseContainer tlc;
+    private ExplosivesContainer ec = new ExplosivesContainer();
+    private ToxicLiquidsContainers tc = new ToxicLiquidsContainers();
+    private ToxicLooseContainer tlc = new ToxicLooseContainer();
 
 
 
@@ -20,10 +20,15 @@ public class Warehouse {
     }
 
     public void showContainers(){
-        int c = 1;
-        for(ContainerInterface x : containerList){
-            System.out.println(c + ". " + x );
-            c++;
+        if(containerList.isEmpty()){
+            System.out.println("Magazyn jest pusty");
+        }else{
+            int c = 1;
+            for(ContainerInterface x : containerList) {
+                System.out.println("Aktualny stan magazynu: ");
+                System.out.println(c + ". " + x);
+                c++;
+            }
         }
     }
 
@@ -59,8 +64,6 @@ public class Warehouse {
                         System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami sypkimi toksycznymi (powyżej 14 dni) został on wywieziony");
                         containerList.remove(x);
                     }
-            }else{
-                System.out.println("Sprawdzono stan magazynu");
             }
         }
     }
