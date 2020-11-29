@@ -13,6 +13,8 @@ public class ToxicLiquidsContainers extends ToxicLooseContainer implements Conta
         this.holeDiameter = holeDiameter;
     }
 
+    public ToxicLiquidsContainers(){}
+
     public double getWeight() {
         return weightBrutto;
     }

@@ -13,6 +13,8 @@ public class HeavyContainer extends BasicContainer implements ContainerInterface
         this.wallThickness = wallThickness;
     }
 
+    public HeavyContainer(){}
+
     public HeavyContainer(double weightNetto, double weightBrutto, Sender sender) {
         super(weightNetto, weightBrutto, sender);
     }

@@ -6,6 +6,7 @@ public class Sender {
     private String address;
     private String birthDate;
     private int pesel;
+    private int warningNumber = 0;
 
     public Sender(String name, String surname, String address, String birthDate, int pesel) {
         this.name = name;
@@ -13,6 +14,10 @@ public class Sender {
         this.address = address;
         this.birthDate = birthDate;
         this.pesel = pesel;
+    }
+
+    public void warn(){
+        warningNumber++;
     }
 
     @Override

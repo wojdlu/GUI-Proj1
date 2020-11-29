@@ -2,9 +2,6 @@ package com.pjatk.proj1;
 
 import com.pjatk.proj1.containers.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -13,20 +10,39 @@ public class Main {
 
         Port port = new Port();
         Warehouse warehouse = new Warehouse();
+        Wagon wagon = new Wagon();
+        SenderBase senderBase = new SenderBase();
+        Sender sender1 = new Sender("Paweł", "Reszka", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
+        senderBase.addSender(sender1);
+        ExplosivesContainer explosivesContainer = new ExplosivesContainer(100, 120, sender1, "II");
+        RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1100, 1400, sender1,120);
+        warehouse.addContainer(explosivesContainer);
+        warehouse.addContainer(refrigeratedContainer);
         while(true){
             int x = menu();
-            if(x==6)
+            if(x==8)
                 break;
             switch (x){
                 case 1:
                     port.addShip(newShip());
                     break;
                 case 2:
-                    warehouse.addContainer(newContainer());
+                    warehouse.addContainer(newContainer(senderBase));
                     break;
                 case 3:
+                    showShipsAndContainers(port);
                     break;
                 case 4:
+                    showContainersInWarehouse(warehouse);
+                    break;
+                case 5:
+                    deleteContainer(warehouse);
+                    break;
+                case 6:
+                    moveContainerToShip(warehouse, port);
+                    break;
+                case 7:
+                    moveContainerToWagonOrWarehouse(warehouse, wagon, port);
                     break;
                 default:
                     menu();
@@ -36,17 +52,24 @@ public class Main {
         }
     }
 
+// Menu główne programu
+
     static int menu(){
         System.out.println("Co chcesz zrobić:");
         System.out.println("1. Stwórz nowy statek");
         System.out.println("2. Stwórz nowy kontener");
-        System.out.println("3. Przenieś kontener na statek z magazynu lub wagonu");
-        System.out.println("4. Przenieś kontener ze statku do magazynu lub wagonu");
-        System.out.println("6. zakończ program");
+        System.out.println("3. Wyświetl statki i załadowane kontenery");
+        System.out.println("4. Wyświetl stan magazynu");
+        System.out.println("5. Usuń istniejący kontener z magazynu");
+        System.out.println("6. Przenieś kontener z magazynu na statek");
+        System.out.println("7. Przenieś kontener ze statku do magazynu lub wagonu");
+        System.out.println("8. zakończ program");
         System.out.print("Wpisz cyfrę odpowiadającą opcji: ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
+
+// Proces tworzenia nowego statku
 
     static Ship newShip() {
         Scanner scanner = new Scanner(System.in);
@@ -66,20 +89,11 @@ public class Main {
         System.out.println("stworzono i dodano do bazy statek: " + ship);
         return ship;
     }
+    // Proces tworzenia nowego kontenera i jego nadawce
 
-    static ContainerInterface newContainer(){
+    static ContainerInterface newContainer(SenderBase senderBase){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("podaj imię nadawcy:");
-        String name = scanner.nextLine();
-        System.out.println("podaj nazwisko nadawcy:");
-        String surname = scanner.nextLine();
-        System.out.println("podaj adres:");
-        String address = scanner.nextLine();
-        System.out.println("podaj datę urodzenia:");
-        String birthDate = scanner.nextLine();
-        System.out.println("podaj pesel:");
-        int pesel = scanner.nextInt();
-        Sender sender = new Sender(name,surname,address,birthDate,pesel);
+        Sender sender = chooseSender(senderBase);
         System.out.println("podaj wagę netto kontenera:");
         double weightNetto = scanner.nextDouble();
         System.out.println("podaj wagę brutto kontenera:");
@@ -146,13 +160,119 @@ public class Main {
                         return tloc;
                     default:
                         System.out.println("Wpisałeś nieprawidłową wartosć");
-                        return newContainer();
+                        return newContainer(senderBase);
                 }
 
             default:
-                return newContainer();
+                return newContainer(senderBase);
 
         }
 
+    }
+
+    static void showShipsAndContainers(Port port){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Istniejące statki: ");
+        port.showShips();
+        System.out.println("Wybierz statek, którego listę kontenerów chcesz zobaczyć i wpisz odpowiadającą cyfrę:");
+        int shipNumber = scanner.nextInt();
+        port.getShip(shipNumber).showContainers();
+    }
+
+    static void showContainersInWarehouse(Warehouse warehouse){
+        System.out.println("Aktualny stan magazynu: ");
+        warehouse.showContainers();
+    }
+
+    static void deleteContainer(Warehouse warehouse){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Kontenery znajdujące się w magazynie: ");
+        warehouse.showContainers();
+        System.out.println("Wybierz konteren i wipisz odpowiadającą cyfrę: ");
+        int containerNumber = scanner.nextInt();
+        warehouse.removeContainer(containerNumber);
+    }
+
+    static Sender chooseSender(SenderBase senderBase) {
+        Scanner scanner = new Scanner(System.in);
+        Sender sender;
+        System.out.println("1. Stwórz nowego nadawcę");
+        System.out.println("2. Wybierz nadawcę z bazy");
+        System.out.println("Wpisz cyfrę odpowiadającą opcji: ");
+        int x = scanner.nextInt();
+        System.out.println("");
+        switch (x) {
+            case 1:
+                System.out.println("podaj imię nadawcy:");
+                String x1 = scanner.nextLine();
+                String name = scanner.nextLine();
+                System.out.println("podaj nazwisko nadawcy:");
+                String surname = scanner.nextLine();
+                System.out.println("podaj adres:");
+                String address = scanner.nextLine();
+                System.out.println("podaj datę urodzenia:");
+                String birthDate = scanner.nextLine();
+                System.out.println("podaj pesel:");
+                int pesel = scanner.nextInt();
+                sender = new Sender(name, surname, address, birthDate, pesel);
+                senderBase.addSender(sender);
+                return sender;
+            case 2:
+                senderBase.showSenderList();
+                System.out.println("wybierz odpowiedni numer");
+                int index = scanner.nextInt();
+                return senderBase.getSender(index);
+            default:
+               return chooseSender(senderBase);
+        }
+
+    }
+
+    static void moveContainerToShip(Warehouse warehouse, Port port){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Wybierz, który kontener chcesz przenieść: ");
+        warehouse.showContainers();
+        System.out.println("Wpisz numer odpowiadający kontenerowi: ");
+        int containerNumber = scanner.nextInt();
+        ContainerInterface container = warehouse.getContainer(containerNumber);
+        System.out.println("Wybierz statek: ");
+        port.showShips();
+        System.out.println("Wpisz numer odpowiadający statkowi: ");
+        int shipNumber = scanner.nextInt();
+        Ship ship = port.getShip(shipNumber);
+        if(ship.addContainer(container))
+            warehouse.removeContainer(containerNumber);
+
+    }
+
+    static void moveContainerToWagonOrWarehouse(Warehouse warehouse, Wagon wagon, Port port){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Wybierz statek z listy: ");
+        port.showShips();
+        System.out.println("Wpisz cyfrę odpowiadającą opcji: ");
+        int shipNumber = scanner.nextInt();
+        Ship ship = port.getShip(shipNumber);
+        System.out.println("Kontenery znajdujące się na statku: ");
+        ship.showContainers();
+        System.out.println("Wybierz kontener i wpisz cyfrę odpowiadającą opcji: ");
+        int containerNumber = scanner.nextInt();
+        ContainerInterface container = ship.getContainer(containerNumber);
+        System.out.println("Gdzie chcesz umieścić kontener: ");
+        System.out.println("1. W wagonie ");
+        System.out.println("2. W magazynie ");
+        System.out.println("Wpisz cyfrę odpowiadającą opcji: ");
+        int x = scanner.nextInt();
+        switch (x) {
+            case 1:
+                if(wagon.addContainer(container))
+                    ship.removeContainer(containerNumber);
+                break;
+            case 2:
+                if(warehouse.addContainer(container))
+                    ship.removeContainer(containerNumber);
+                break;
+            default:
+                moveContainerToWagonOrWarehouse(warehouse, wagon, port);
+        }
     }
 }

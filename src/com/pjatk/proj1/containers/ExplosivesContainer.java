@@ -12,6 +12,9 @@ public class ExplosivesContainer extends HeavyContainer implements ContainerInte
         super(weightNetto, weightBrutto, sender);
         this.securityClass = securityClass;
     }
+
+    public ExplosivesContainer(){}
+
     public double getWeight() {
         return weightBrutto;
     }

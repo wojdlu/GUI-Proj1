@@ -11,6 +11,9 @@ public class RefrigeratedContainer extends HeavyContainer implements ContainerIn
         super(weightNetto, weightBrutto, sender);
         this.powerConsumption = powerConsumption;
     }
+
+    public RefrigeratedContainer(){}
+
     public double getWeight() {
         return weightBrutto;
     }

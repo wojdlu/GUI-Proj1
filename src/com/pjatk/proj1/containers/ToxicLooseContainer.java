@@ -12,6 +12,8 @@ public class ToxicLooseContainer extends HeavyContainer implements ContainerInte
         this.grainSize = grainSize;
     }
 
+    public ToxicLooseContainer(){}
+
     public ToxicLooseContainer(double weightNetto, double weightBrutto, Sender sender) {
         super(weightNetto, weightBrutto, sender);
     }

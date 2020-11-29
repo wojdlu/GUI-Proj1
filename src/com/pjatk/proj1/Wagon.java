@@ -9,11 +9,13 @@ public class Wagon {
     List<ContainerInterface> wagon = new ArrayList<>();
     int maxWagonNumber = 10;
 
-    public void addContainer(ContainerInterface container){
+    public boolean addContainer(ContainerInterface container){
         if(wagon.size() < maxWagonNumber){
             wagon.add(container);
+            return true;
         }else{
-            System.out.println("Wagon jest pełen");
+            System.out.println("Wagon jest pełen i nie można dodać kolejnych kontenerów");
+            return false;
         }
     }
 }
