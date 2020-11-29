@@ -6,18 +6,20 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-
+        public static void main(String[] args) {
         Port port = new Port();
         Warehouse warehouse = new Warehouse();
         Wagon wagon = new Wagon();
         SenderBase senderBase = new SenderBase();
+        Calendar calendar = new Calendar(warehouse, wagon);
+        calendar.start();
         Sender sender1 = new Sender("Paweł", "Reszka", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
         senderBase.addSender(sender1);
         ExplosivesContainer explosivesContainer = new ExplosivesContainer(100, 120, sender1, "II");
         RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1100, 1400, sender1,120);
         warehouse.addContainer(explosivesContainer);
         warehouse.addContainer(refrigeratedContainer);
+
         while(true){
             int x = menu();
             if(x==8)
@@ -39,10 +41,13 @@ public class Main {
                     deleteContainer(warehouse);
                     break;
                 case 6:
-                    moveContainerToShip(warehouse, port);
+                    moveContainerToShip(warehouse, port, calendar);
                     break;
                 case 7:
                     moveContainerToWagonOrWarehouse(warehouse, wagon, port);
+                    break;
+                case 9:
+                    System.out.println(calendar.getDay());
                     break;
                 default:
                     menu();
@@ -228,7 +233,7 @@ public class Main {
 
     }
 
-    static void moveContainerToShip(Warehouse warehouse, Port port){
+    static void moveContainerToShip(Warehouse warehouse, Port port, Calendar calendar){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wybierz, który kontener chcesz przenieść: ");
         warehouse.showContainers();
@@ -240,6 +245,7 @@ public class Main {
         System.out.println("Wpisz numer odpowiadający statkowi: ");
         int shipNumber = scanner.nextInt();
         Ship ship = port.getShip(shipNumber);
+        container.setTransportDay(calendar.getDay());
         if(ship.addContainer(container))
             warehouse.removeContainer(containerNumber);
 

@@ -9,6 +9,7 @@ public class BasicContainer implements ContainerInterface{
     protected double weightBrutto;
     protected final UUID ID = UUID.randomUUID();
     protected Sender sender;
+    protected int transportDay;
 
     public BasicContainer(double weightNetto, double weightBrutto, Sender sender) {
         this.weightNetto = weightNetto;
@@ -19,8 +20,20 @@ public class BasicContainer implements ContainerInterface{
     public BasicContainer(){}
 
     public double getWeight() {
+
         return weightBrutto;
     }
+
+
+
+    public void setTransportDay(int transportDay){
+        this.transportDay = transportDay;
+    }
+
+    public int getTransportDay(){
+        return transportDay;
+    }
+
 
     @Override
     public String toString() {

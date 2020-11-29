@@ -12,6 +12,7 @@ public class Warehouse {
     private ToxicLooseContainer tlc;
 
 
+
     public boolean addContainer(ContainerInterface containerInterface){
 
         containerList.add(containerInterface);
@@ -38,6 +39,29 @@ public class Warehouse {
             containerList.remove(x);
         }catch (Exception e){
             System.out.println("Wybrano niepoprawny numer");
+        }
+    }
+
+    public void checkDays(int day){
+        for(ContainerInterface x: containerList){
+            if(x.getClass() == ec.getClass()){
+                if(day - x.getTransportDay() > 5) {
+                    System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami wybuchowymi (powyżej 5 dni) został on wywieziony");
+                    containerList.remove(x);
+                    }
+            }else if(x.getClass() == tc.getClass()){
+                    if(day - x.getTransportDay() > 10) {
+                        System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami płynnymi toksycznymi (powyżej 10 dni) został on wywieziony");
+                        containerList.remove(x);
+                    }
+            }else if(x.getClass() == tlc.getClass()){
+                    if(day - x.getTransportDay() > 14) {
+                        System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami sypkimi toksycznymi (powyżej 14 dni) został on wywieziony");
+                        containerList.remove(x);
+                    }
+            }else{
+                System.out.println("Sprawdzono stan magazynu");
+            }
         }
     }
 }

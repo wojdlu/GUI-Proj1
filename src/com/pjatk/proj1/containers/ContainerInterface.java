@@ -4,4 +4,8 @@ public interface ContainerInterface {
 
 
     double getWeight();
+
+    void setTransportDay(int x);
+
+    int getTransportDay();
 }

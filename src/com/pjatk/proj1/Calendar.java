@@ -1,4 +1,4 @@
-package com.pjatk.proj1.containers;
+package com.pjatk.proj1;
 
 import com.pjatk.proj1.Wagon;
 import com.pjatk.proj1.Warehouse;
@@ -6,15 +6,16 @@ import com.pjatk.proj1.Warehouse;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Calendar implements Runnable {
+public class Calendar extends Thread {
 
-    private int day = 0;
-    Wagon wagon;
-    Warehouse warehouse;
+    public static int day;
+    private static String monitor = new String();
+    private Wagon wagon;
+    private Warehouse warehouse;
 
     Calendar(Warehouse warehouse, Wagon wagon){
-        this.wagon = wagon;
         this.warehouse = warehouse;
+        this.wagon = wagon;
     }
 
     @Override
@@ -22,14 +23,18 @@ public class Calendar implements Runnable {
         try{
             while(true) {
                 Thread.sleep(5000);
-                day++;
-                if(day%5 == 0){
+                    day++;
+                    warehouse.checkDays(day);
 
-                }
             }
+
         }catch (Exception e){
 
         }
+    }
 
+    public int getDay(){
+        return day;
     }
 }
+
