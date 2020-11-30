@@ -15,6 +15,10 @@ public class ToxicLiquidsContainers extends ToxicLooseContainer implements Conta
 
     public ToxicLiquidsContainers(){}
 
+    public Sender getSender(){
+        return sender;
+    }
+
     public double getWeight() {
         return weightBrutto;
     }

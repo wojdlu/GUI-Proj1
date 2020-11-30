@@ -3,10 +3,12 @@ package com.pjatk.proj1;
 import com.pjatk.proj1.containers.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Warehouse {
-    List<ContainerInterface> containerList = new ArrayList<>();
+    private List<ContainerInterface> containerList = new ArrayList<>();
     private ExplosivesContainer ec = new ExplosivesContainer();
     private ToxicLiquidsContainers tc = new ToxicLiquidsContainers();
     private ToxicLooseContainer tlc = new ToxicLooseContainer();
@@ -23,6 +25,8 @@ public class Warehouse {
         if(containerList.isEmpty()){
             System.out.println("Magazyn jest pusty");
         }else{
+            containerList.sort(Comparator.comparing(ContainerInterface::getTransportDay));
+            Collections.reverse(containerList);
             int c = 1;
             for(ContainerInterface x : containerList) {
                 System.out.println("Aktualny stan magazynu: ");
@@ -50,7 +54,7 @@ public class Warehouse {
     public void checkDays(int day){
         for(ContainerInterface x: containerList){
             if(x.getClass() == ec.getClass()){
-                if(day - x.getTransportDay() > 5) {
+                if(day - x.getTransportDay() > 2) {
                     System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami wybuchowymi (powyżej 5 dni) został on wywieziony");
                     containerList.remove(x);
                     }
@@ -61,10 +65,20 @@ public class Warehouse {
                     }
             }else if(x.getClass() == tlc.getClass()){
                     if(day - x.getTransportDay() > 14) {
-                        System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami sypkimi toksycznymi (powyżej 14 dni) został on wywieziony");
-                        containerList.remove(x);
+                       System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami sypkimi toksycznymi (powyżej 14 dni) został on wywieziony");
+                       containerList.remove(x);
                     }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "containerList=" + containerList +
+                ", ec=" + ec +
+                ", tc=" + tc +
+                ", tlc=" + tlc +
+                '}';
     }
 }

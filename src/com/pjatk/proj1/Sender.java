@@ -20,6 +20,10 @@ public class Sender {
         warningNumber++;
     }
 
+    public String getName(){
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Sender{" +
@@ -28,6 +32,7 @@ public class Sender {
                 ", address='" + address + '\'' +
                 ", birthDate='" + birthDate + '\'' +
                 ", pesel=" + pesel +
+                ", warningNumber=" + warningNumber +
                 '}';
     }
 }

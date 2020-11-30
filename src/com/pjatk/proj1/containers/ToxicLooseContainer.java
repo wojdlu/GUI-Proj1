@@ -22,6 +22,10 @@ public class ToxicLooseContainer extends HeavyContainer implements ContainerInte
         return weightBrutto;
     }
 
+    public Sender getSender(){
+        return sender;
+    }
+
     @Override
     public String toString() {
         return "ToxicLooseContainer{" +

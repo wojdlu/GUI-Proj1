@@ -14,6 +14,10 @@ public class RefrigeratedContainer extends HeavyContainer implements ContainerIn
 
     public RefrigeratedContainer(){}
 
+    public Sender getSender(){
+        return sender;
+    }
+
     public double getWeight() {
         return weightBrutto;
     }

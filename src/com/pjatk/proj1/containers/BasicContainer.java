@@ -5,6 +5,7 @@ import com.pjatk.proj1.Sender;
 import java.util.UUID;
 
 public class BasicContainer implements ContainerInterface{
+
     protected double weightNetto;
     protected double weightBrutto;
     protected final UUID ID = UUID.randomUUID();
@@ -24,8 +25,6 @@ public class BasicContainer implements ContainerInterface{
         return weightBrutto;
     }
 
-
-
     public void setTransportDay(int transportDay){
         this.transportDay = transportDay;
     }
@@ -34,6 +33,9 @@ public class BasicContainer implements ContainerInterface{
         return transportDay;
     }
 
+    public Sender getSender(){
+        return sender;
+    }
 
     @Override
     public String toString() {
@@ -42,6 +44,7 @@ public class BasicContainer implements ContainerInterface{
                 ", weightBrutto=" + weightBrutto +
                 ", ID=" + ID +
                 ", sender=" + sender +
+                ", transportDay=" + transportDay +
                 '}';
     }
 }

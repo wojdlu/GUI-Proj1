@@ -23,6 +23,10 @@ public class HeavyContainer extends BasicContainer implements ContainerInterface
         return weightBrutto;
     }
 
+    public Sender getSender(){
+        return sender;
+    }
+
 
     @Override
     public String toString() {

@@ -2,11 +2,12 @@ package com.pjatk.proj1;
 
 import com.pjatk.proj1.containers.*;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IOException, ClassNotFoundException {
         Port port = new Port();
         Warehouse warehouse = new Warehouse();
         Wagon wagon = new Wagon();
@@ -14,9 +15,13 @@ public class Main {
         Calendar calendar = new Calendar(warehouse, wagon);
         calendar.start();
         Sender sender1 = new Sender("Tomasz", "Król", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
+        Sender sender3 = new Sender("Michał", "Baton", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
+        Sender sender2 = new Sender("Ala", "Kowalska", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
         senderBase.addSender(sender1);
+        senderBase.addSender(sender2);
+        senderBase.addSender(sender3);
         ExplosivesContainer explosivesContainer = new ExplosivesContainer(100, 120, sender1, "II");
-        RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1100, 1400, sender1,120);
+        RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1, 1, sender1,120);
         RefrigeratedContainer refrigeratedContainer1 = new RefrigeratedContainer(1100, 1400, sender1,120);
         warehouse.addContainer(explosivesContainer);
         warehouse.addContainer(refrigeratedContainer);
@@ -25,7 +30,7 @@ public class Main {
         while(true){
 
                 int x = menu();
-                if (x == 8)
+                if (x == 9)
                     break;
                 switch (x) {
                     case 1:
@@ -38,15 +43,18 @@ public class Main {
                         showShipsAndContainers(port);
                         break;
                     case 4:
-                        warehouse.showContainers();
+                        letShipGo(port);
                         break;
                     case 5:
-                        deleteContainer(warehouse);
+                        warehouse.showContainers();
                         break;
                     case 6:
-                        moveContainerToShip(warehouse, port, calendar);
+                        deleteContainer(warehouse);
                         break;
                     case 7:
+                        moveContainerToShip(warehouse, port, calendar);
+                        break;
+                    case 8:
                         moveContainerToWagonOrWarehouse(warehouse, wagon, port);
                         break;
                     default:
@@ -65,11 +73,12 @@ public class Main {
         System.out.println("1. Stwórz nowy statek");
         System.out.println("2. Stwórz nowy kontener");
         System.out.println("3. Wyświetl statki i załadowane kontenery");
-        System.out.println("4. Wyświetl stan magazynu");
-        System.out.println("5. Usuń istniejący kontener z magazynu");
-        System.out.println("6. Przenieś kontener z magazynu na statek");
-        System.out.println("7. Przenieś kontener ze statku do magazynu lub wagonu");
-        System.out.println("8. zakończ program");
+        System.out.println("4. Wypuść statek");
+        System.out.println("5. Wyświetl stan magazynu");
+        System.out.println("6. Usuń istniejący kontener z magazynu");
+        System.out.println("7. Przenieś kontener z magazynu na statek");
+        System.out.println("8. Przenieś kontener ze statku do magazynu lub wagonu");
+        System.out.println("9. zakończ program");
         System.out.print("Wpisz cyfrę odpowiadającą opcji: ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
@@ -188,6 +197,15 @@ public class Main {
             port.getShip(shipNumber).showContainers();
         }
 
+    }
+
+    static void letShipGo(Port port){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Wybierz statek, który ma opóścić port:");
+            port.showShips();
+            System.out.println("Wpisz odpowiednią cyfrę");
+            int shipNumber = scanner.nextInt();
+            port.deleteShip(shipNumber);
     }
 
     static void deleteContainer(Warehouse warehouse){

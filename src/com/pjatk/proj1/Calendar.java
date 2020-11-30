@@ -22,11 +22,12 @@ public class Calendar extends Thread {
     public void run() {
         try{
             while(true) {
-                Thread.sleep(5000);
-                    day++;
-                    warehouse.checkDays(day);
-                    wagon.checkSpace();
-
+               synchronized (monitor) {
+                   Thread.sleep(5000);
+                   day++;
+                   //warehouse.checkDays(day);
+                   wagon.checkSpace();
+               }
             }
 
         }catch (Exception e){

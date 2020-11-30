@@ -28,9 +28,10 @@ public class Wagon {
     public void checkSpace(){
         if(wagon.size() == maxWagonNumber){
             waitingTime++;
-            if(waitingTime == 6)
+            if(waitingTime == 6) {
                 wagon.clear();
                 System.out.println("Wagon jest gotowy do załadunku");
+            }
         }else{
             waitingTime = 0;
         }

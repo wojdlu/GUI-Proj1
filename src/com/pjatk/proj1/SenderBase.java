@@ -1,6 +1,8 @@
 package com.pjatk.proj1;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SenderBase {
@@ -17,6 +19,7 @@ public class SenderBase {
         int c = 1;
         for (Sender x: senderList){
             System.out.println(c + ". " + x);
+            c++;
         }
     }
 

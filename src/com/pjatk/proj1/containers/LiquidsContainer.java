@@ -16,6 +16,10 @@ public class LiquidsContainer extends BasicContainer implements ContainerInterfa
         return weightBrutto;
     }
 
+    public Sender getSender(){
+        return sender;
+    }
+
     @Override
     public String toString() {
         return "LiquidsContainer{" +

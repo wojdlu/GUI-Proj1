@@ -2,9 +2,7 @@ package com.pjatk.proj1;
 
 import com.pjatk.proj1.containers.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Ship {
 
@@ -15,9 +13,6 @@ public class Ship {
     private final int MAX_WEIGHT;
     private final UUID uniqueId = UUID.randomUUID();
     private final String NAME;
-    private String homePort;
-    private String destinationPort;
-    private String startingPort;
     private int weight;
 
     private List<ContainerInterface> containers = new ArrayList<>();
@@ -93,6 +88,7 @@ public class Ship {
         if(containers.isEmpty()){
             System.out.println("Statek jest pusty");
         }else {
+            Collections.sort(containers, Comparator.comparing(ContainerInterface::getWeight));
             int c = 1;
             for (ContainerInterface x : containers) {
                 System.out.println(c + ". " + x);
@@ -111,7 +107,9 @@ public class Ship {
         containers.remove(x);
     }
 
-
+    public String getNAME() {
+        return NAME;
+    }
 
     @Override
     public String toString() {
