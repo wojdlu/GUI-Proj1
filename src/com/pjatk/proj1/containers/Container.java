@@ -2,7 +2,7 @@ package com.pjatk.proj1.containers;
 
 import com.pjatk.proj1.Sender;
 
-public interface ContainerInterface {
+public interface Container {
 
     double getWeight();
 
@@ -11,4 +11,6 @@ public interface ContainerInterface {
     int getTransportDay();
 
     Sender getSender();
+
+    String toFile();
 }

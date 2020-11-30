@@ -4,26 +4,38 @@ import com.pjatk.proj1.Sender;
 
 import java.util.UUID;
 
-public class HeavyContainer extends BasicContainer implements ContainerInterface{
+public class HeavyContainer extends BasicContainer implements Container {
     private double wallThickness;
 
+//    HeavyContainer heavyContainer = new HeavyContainer(weightNetto, weightBrutto, sender, id, wallThickness);
 
     public HeavyContainer(double weightNetto, double weightBrutto, Sender sender, double wallThickness) {
         super(weightNetto, weightBrutto, sender);
         this.wallThickness = wallThickness;
     }
 
-    public HeavyContainer(){}
+    public HeavyContainer(double weightNetto, double weightBrutto, Sender sender, UUID id, int day, double wallThickness) {
+        super(weightNetto, weightBrutto, sender, id, day);
+        this.wallThickness = wallThickness;
+    }
+
+    public HeavyContainer(double weightNetto, double weightBrutto, Sender sender, UUID id, int day) {
+        super(weightNetto, weightBrutto, sender, id, day);
+        this.wallThickness = wallThickness;
+    }
+
+    public HeavyContainer() {
+    }
 
     public HeavyContainer(double weightNetto, double weightBrutto, Sender sender) {
         super(weightNetto, weightBrutto, sender);
     }
 
-    public double getWeight(){
+    public double getWeight() {
         return weightBrutto;
     }
 
-    public Sender getSender(){
+    public Sender getSender() {
         return sender;
     }
 
@@ -36,8 +48,20 @@ public class HeavyContainer extends BasicContainer implements ContainerInterface
                 ", weightBrutto=" + weightBrutto +
                 ", ID=" + ID +
                 ", sender=" + sender +
+                ", transportDay=" + transportDay +
                 '}';
     }
 
+    public String toFile() {
+        return "HeavyContainer:" +
+                "," + weightNetto +
+                "," + weightBrutto +
+                "," + ID +
+                "," + sender.toFile() +
+                "," + transportDay +
+                "," + wallThickness +
+
+                '}';
+    }
 
 }

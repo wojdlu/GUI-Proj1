@@ -4,7 +4,7 @@ import com.pjatk.proj1.Sender;
 
 import java.util.UUID;
 
-public class ExplosivesContainer extends HeavyContainer implements ContainerInterface {
+public class ExplosivesContainer extends HeavyContainer implements Container {
 
     protected String securityClass;
 
@@ -13,13 +13,19 @@ public class ExplosivesContainer extends HeavyContainer implements ContainerInte
         this.securityClass = securityClass;
     }
 
-    public ExplosivesContainer(){}
+    public ExplosivesContainer(double weightNetto, double weightBrutto, Sender sender, UUID id, int day, String securityClass) {
+        super(weightNetto, weightBrutto, sender, id, day);
+        this.securityClass = securityClass;
+    }
+
+    public ExplosivesContainer() {
+    }
 
     public double getWeight() {
         return weightBrutto;
     }
 
-    public Sender getSender(){
+    public Sender getSender() {
         return sender;
     }
 
@@ -31,7 +37,18 @@ public class ExplosivesContainer extends HeavyContainer implements ContainerInte
                 ", weightBrutto=" + weightBrutto +
                 ", ID=" + ID +
                 ", sender=" + sender +
+                ", transportDay=" + transportDay +
                 '}';
+    }
+
+    public String toFile() {
+        return "ExplosivesContainer:" +
+                    weightNetto +
+                "," + weightBrutto +
+                "," + ID +
+                "," + sender.toFile() +
+                "," + transportDay +
+                "," + securityClass;
     }
 }
 

@@ -4,7 +4,7 @@ import com.pjatk.proj1.Sender;
 
 import java.util.UUID;
 
-public class LiquidsContainer extends BasicContainer implements ContainerInterface {
+public class LiquidsContainer extends BasicContainer implements Container {
 
     protected double holeDiameter;
 
@@ -12,11 +12,17 @@ public class LiquidsContainer extends BasicContainer implements ContainerInterfa
         super(weightNetto, weightBrutto, sender);
         this.holeDiameter = holeDiameter;
     }
+
+    public LiquidsContainer(double weightNetto, double weightBrutto, Sender sender, UUID id, int day, double holeDiameter) {
+        super(weightNetto, weightBrutto, sender, id, day);
+        this.holeDiameter = holeDiameter;
+    }
+
     public double getWeight() {
         return weightBrutto;
     }
 
-    public Sender getSender(){
+    public Sender getSender() {
         return sender;
     }
 
@@ -28,6 +34,18 @@ public class LiquidsContainer extends BasicContainer implements ContainerInterfa
                 ", weightBrutto=" + weightBrutto +
                 ", ID=" + ID +
                 ", sender=" + sender +
+                ", transportDay=" + transportDay +
+                '}';
+    }
+
+    public String toFile() {
+        return "LiquidsContainer:" +
+                "," + weightNetto +
+                "," + weightBrutto +
+                "," + ID +
+                "," + sender.toFile() +
+                "," + transportDay +
+                ",=" + holeDiameter +
                 '}';
     }
 }

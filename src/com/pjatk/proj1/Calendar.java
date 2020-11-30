@@ -25,7 +25,7 @@ public class Calendar extends Thread {
                synchronized (monitor) {
                    Thread.sleep(5000);
                    day++;
-                   //warehouse.checkDays(day);
+                   warehouse.checkDays(day);
                    wagon.checkSpace();
                }
             }

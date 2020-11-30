@@ -16,11 +16,20 @@ public class Sender {
         this.pesel = pesel;
     }
 
-    public void warn(){
+    public Sender(String name, String surname, String address, String birthDate, int pesel, int warningNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.birthDate = birthDate;
+        this.pesel = pesel;
+        this.warningNumber = warningNumber;
+    }
+
+    public void warn() {
         warningNumber++;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -35,4 +44,16 @@ public class Sender {
                 ", warningNumber=" + warningNumber +
                 '}';
     }
+
+    public String toFile() {
+        return "Sender:" +
+                     name +
+                ";" + surname +
+                ";" + address +
+                ";" + birthDate +
+                ";" + pesel +
+                ";" + warningNumber;
+    }
+
+
 }

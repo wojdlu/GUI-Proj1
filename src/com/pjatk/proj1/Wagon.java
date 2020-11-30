@@ -1,19 +1,18 @@
 package com.pjatk.proj1;
 
-import com.pjatk.proj1.containers.ContainerInterface;
+import com.pjatk.proj1.containers.Container;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 
 public class Wagon {
-    List<ContainerInterface> wagon = new ArrayList<>();
+    List<Container> wagon = new ArrayList<>();
     int maxWagonNumber = 2;
     int waitingTime = 0;
 
 
-    public boolean addContainer(ContainerInterface container){
+    public boolean addContainer(Container container){
         if(wagon.size() < maxWagonNumber){
             wagon.add(container);
             return true;

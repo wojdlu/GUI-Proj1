@@ -4,12 +4,16 @@ import com.pjatk.proj1.Sender;
 
 import java.util.UUID;
 
-public class ToxicLiquidsContainers extends ToxicLooseContainer implements ContainerInterface {
+public class ToxicLiquidsContainers extends ToxicLooseContainer implements Container {
 
     private double holeDiameter;
 
     public ToxicLiquidsContainers(double weightNetto, double weightBrutto, Sender sender, double holeDiameter) {
         super(weightNetto, weightBrutto, sender);
+        this.holeDiameter = holeDiameter;
+    }
+    public ToxicLiquidsContainers(double weightNetto, double weightBrutto, Sender sender, UUID id, int day, double holeDiameter) {
+        super(weightNetto, weightBrutto, sender, id, day);
         this.holeDiameter = holeDiameter;
     }
 
@@ -31,6 +35,18 @@ public class ToxicLiquidsContainers extends ToxicLooseContainer implements Conta
                 ", weightBrutto=" + weightBrutto +
                 ", ID=" + ID +
                 ", sender=" + sender +
+                ", transportDay=" + transportDay +
+                '}';
+    }
+
+    public String toFile() {
+        return "ToxicLiquidsContainers:" +
+                 weightNetto +
+                "," + weightBrutto +
+                "," + ID +
+                "," + sender.toFile() +
+                "," + transportDay +
+                ",=" + holeDiameter +
                 '}';
     }
 }

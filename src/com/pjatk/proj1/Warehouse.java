@@ -8,16 +8,16 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Warehouse {
-    private List<ContainerInterface> containerList = new ArrayList<>();
+    private List<Container> containerList = new ArrayList<>();
     private ExplosivesContainer ec = new ExplosivesContainer();
     private ToxicLiquidsContainers tc = new ToxicLiquidsContainers();
     private ToxicLooseContainer tlc = new ToxicLooseContainer();
 
 
 
-    public boolean addContainer(ContainerInterface containerInterface){
+    public boolean addContainer(Container container){
 
-        containerList.add(containerInterface);
+        containerList.add(container);
         return true;
     }
 
@@ -25,10 +25,10 @@ public class Warehouse {
         if(containerList.isEmpty()){
             System.out.println("Magazyn jest pusty");
         }else{
-            containerList.sort(Comparator.comparing(ContainerInterface::getTransportDay));
+            containerList.sort(Comparator.comparing(Container::getTransportDay));
             Collections.reverse(containerList);
             int c = 1;
-            for(ContainerInterface x : containerList) {
+            for(Container x : containerList) {
                 System.out.println("Aktualny stan magazynu: ");
                 System.out.println(c + ". " + x);
                 c++;
@@ -36,9 +36,9 @@ public class Warehouse {
         }
     }
 
-    public ContainerInterface getContainer(int x){
+    public Container getContainer(int x){
         x = x-1;
-        ContainerInterface container = containerList.get(x);
+        Container container = containerList.get(x);
         return container;
     }
 
@@ -52,9 +52,9 @@ public class Warehouse {
     }
 
     public void checkDays(int day){
-        for(ContainerInterface x: containerList){
+        for(Container x: containerList){
             if(x.getClass() == ec.getClass()){
-                if(day - x.getTransportDay() > 2) {
+                if(day - x.getTransportDay() > 5) {
                     System.out.println("Z powodu zbyt długiego magazynowania Kontenera z materiałami wybuchowymi (powyżej 5 dni) został on wywieziony");
                     containerList.remove(x);
                     }

@@ -15,7 +15,7 @@ public class Ship {
     private final String NAME;
     private int weight;
 
-    private List<ContainerInterface> containers = new ArrayList<>();
+    private List<Container> containers = new ArrayList<>();
 
 
     public Ship(int MAX_TOXIC_EXPLOSIVE_CONTAINERS, int MAX_HEAVY_CONTAINERS, int MAX_ELECTRIC_CONTAINERS, int MAX_ALL_CONTAINERS, int MAX_WEIGHT, String NAME) {
@@ -37,9 +37,17 @@ public class Ship {
     private RefrigeratedContainer rc = new RefrigeratedContainer();
     private HeavyContainer hc = new HeavyContainer();
 
+    public void setContainers(List<Container> containers){
+        this.containers = containers;
+    }
 
-    public boolean addContainer(ContainerInterface container){
-        for(ContainerInterface x : containers){
+
+    public void addSingleContainers(Container containers){
+        this.containers.add(containers);
+    }
+
+    public boolean addContainer(Container container){
+        for(Container x : containers){
             weight += x.getWeight();
         }
         weight += container.getWeight();
@@ -88,16 +96,21 @@ public class Ship {
         if(containers.isEmpty()){
             System.out.println("Statek jest pusty");
         }else {
-            Collections.sort(containers, Comparator.comparing(ContainerInterface::getWeight));
+            Collections.sort(containers, Comparator.comparing(Container::getWeight));
             int c = 1;
-            for (ContainerInterface x : containers) {
+            for (Container x : containers) {
                 System.out.println(c + ". " + x);
                 c++;
             }
         }
     }
 
-    public ContainerInterface getContainer(int x){
+    public List<Container> getContainers() {
+        return containers;
+    }
+
+
+    public Container getContainer(int x){
         x = x -1;
         return containers.get(x);
     }
@@ -122,6 +135,16 @@ public class Ship {
                 ", MAX_WEIGHT=" + MAX_WEIGHT +
                 ", uniqueId=" + uniqueId +
                 '}';
+    }
+
+    public String toFile() {
+        return "Statek:" +
+                 MAX_TOXIC_EXPLOSIVE_CONTAINERS +
+                "," + MAX_HEAVY_CONTAINERS +
+                "," + MAX_ELECTRIC_CONTAINERS +
+                "," + MAX_ALL_CONTAINERS +
+                "," + MAX_WEIGHT +
+                "," + NAME;
     }
 }
 

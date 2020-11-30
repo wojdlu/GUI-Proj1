@@ -7,60 +7,59 @@ import java.util.Scanner;
 
 public class Main {
 
-        public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Port port = new Port();
         Warehouse warehouse = new Warehouse();
         Wagon wagon = new Wagon();
         SenderBase senderBase = new SenderBase();
         Calendar calendar = new Calendar(warehouse, wagon);
         calendar.start();
-        Sender sender1 = new Sender("Tomasz", "Król", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
-        Sender sender3 = new Sender("Michał", "Baton", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
-        Sender sender2 = new Sender("Ala", "Kowalska", "Kraków, Zamkowa 11", "11.12.1991",1231231231);
+        Sender sender1 = new Sender("Tomasz", "Król", "Kraków, Zamkowa 11", "11.12.1991", 1231231231);
+        Sender sender3 = new Sender("Michał", "Baton", "Kraków, Zamkowa 11", "11.12.1991", 1231231231);
+        Sender sender2 = new Sender("Ala", "Kowalska", "Kraków, Zamkowa 11", "11.12.1991", 1231231231);
         senderBase.addSender(sender1);
         senderBase.addSender(sender2);
         senderBase.addSender(sender3);
         ExplosivesContainer explosivesContainer = new ExplosivesContainer(100, 120, sender1, "II");
-        RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1, 1, sender1,120);
-        RefrigeratedContainer refrigeratedContainer1 = new RefrigeratedContainer(1100, 1400, sender1,120);
+        RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(1, 1, sender1, 120);
+        RefrigeratedContainer refrigeratedContainer1 = new RefrigeratedContainer(1100, 1400, sender1, 120);
         warehouse.addContainer(explosivesContainer);
         warehouse.addContainer(refrigeratedContainer);
         warehouse.addContainer(refrigeratedContainer1);
 
-        while(true){
+        while (true) {
 
-                int x = menu();
-                if (x == 9)
+            int x = menu();
+            if (x == 9)
+                break;
+            switch (x) {
+                case 1:
+                    port.addShip(newShip());
                     break;
-                switch (x) {
-                    case 1:
-                        port.addShip(newShip());
-                        break;
-                    case 2:
-                        warehouse.addContainer(newContainer(senderBase));
-                        break;
-                    case 3:
-                        showShipsAndContainers(port);
-                        break;
-                    case 4:
-                        letShipGo(port);
-                        break;
-                    case 5:
-                        warehouse.showContainers();
-                        break;
-                    case 6:
-                        deleteContainer(warehouse);
-                        break;
-                    case 7:
-                        moveContainerToShip(warehouse, port, calendar);
-                        break;
-                    case 8:
-                        moveContainerToWagonOrWarehouse(warehouse, wagon, port);
-                        break;
-                    default:
-                        menu();
-                }
-
+                case 2:
+                    warehouse.addContainer(newContainer(senderBase));
+                    break;
+                case 3:
+                    showShipsAndContainers(port);
+                    break;
+                case 4:
+                    letShipGo(port);
+                    break;
+                case 5:
+                    warehouse.showContainers();
+                    break;
+                case 6:
+                    deleteContainer(warehouse);
+                    break;
+                case 7:
+                    moveContainerToShip(warehouse, port, calendar);
+                    break;
+                case 8:
+                    moveContainerToWagonOrWarehouse(warehouse, wagon, port);
+                    break;
+                default:
+                    menu();
+            }
 
 
         }
@@ -68,7 +67,7 @@ public class Main {
 
 // Menu główne programu
 
-    static int menu(){
+    static int menu() {
         System.out.println("Co chcesz zrobić:");
         System.out.println("1. Stwórz nowy statek");
         System.out.println("2. Stwórz nowy kontener");
@@ -106,7 +105,7 @@ public class Main {
     }
     // Proces tworzenia nowego kontenera i jego nadawce
 
-    static ContainerInterface newContainer(SenderBase senderBase){
+    static Container newContainer(SenderBase senderBase) {
         Scanner scanner = new Scanner(System.in);
         Sender sender = chooseSender(senderBase);
         System.out.println("podaj wagę netto kontenera:");
@@ -125,9 +124,9 @@ public class Main {
 
         int y = scanner.nextInt();
 
-        switch (y){
+        switch (y) {
             case 1:
-                BasicContainer bc = new BasicContainer(weightNetto, weightBrutto,sender);
+                BasicContainer bc = new BasicContainer(weightNetto, weightBrutto, sender);
                 System.out.println("stworzono kontener: " + bc);
                 return bc;
             case 2:
@@ -160,7 +159,7 @@ public class Main {
                 System.out.println("2. kontener na materiały sypkie toksyczne");
                 System.out.println("Wpisz cyfrę odpowiadającą opcji: ");
                 int z = scanner.nextInt();
-                switch (z){
+                switch (z) {
                     case 1:
                         System.out.println("Podaj średnice otworu wlewowego : ");
                         double holeDiameter1 = scanner.nextDouble();
@@ -185,10 +184,10 @@ public class Main {
 
     }
 
-    static void showShipsAndContainers(Port port){
-        if(port.getShipList().isEmpty()){
+    static void showShipsAndContainers(Port port) {
+        if (port.getShipList().isEmpty()) {
             System.out.println("Nie ma jeszcze żadnych statków w porcie, które można by wyświetlić");
-        }else {
+        } else {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Istniejące statki: ");
             port.showShips();
@@ -199,16 +198,16 @@ public class Main {
 
     }
 
-    static void letShipGo(Port port){
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Wybierz statek, który ma opóścić port:");
-            port.showShips();
-            System.out.println("Wpisz odpowiednią cyfrę");
-            int shipNumber = scanner.nextInt();
-            port.deleteShip(shipNumber);
+    static void letShipGo(Port port) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Wybierz statek, który ma opóścić port:");
+        port.showShips();
+        System.out.println("Wpisz odpowiednią cyfrę");
+        int shipNumber = scanner.nextInt();
+        port.deleteShip(shipNumber);
     }
 
-    static void deleteContainer(Warehouse warehouse){
+    static void deleteContainer(Warehouse warehouse) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Kontenery znajdujące się w magazynie: ");
         warehouse.showContainers();
@@ -247,30 +246,30 @@ public class Main {
                 int index = scanner.nextInt();
                 return senderBase.getSender(index);
             default:
-               return chooseSender(senderBase);
+                return chooseSender(senderBase);
         }
 
     }
 
-    static void moveContainerToShip(Warehouse warehouse, Port port, Calendar calendar){
+    static void moveContainerToShip(Warehouse warehouse, Port port, Calendar calendar) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wybierz, który kontener chcesz przenieść: ");
         warehouse.showContainers();
         System.out.println("Wpisz numer odpowiadający kontenerowi: ");
         int containerNumber = scanner.nextInt();
-        ContainerInterface container = warehouse.getContainer(containerNumber);
+        Container container = warehouse.getContainer(containerNumber);
         System.out.println("Wybierz statek: ");
         port.showShips();
         System.out.println("Wpisz numer odpowiadający statkowi: ");
         int shipNumber = scanner.nextInt();
         Ship ship = port.getShip(shipNumber);
         container.setTransportDay(calendar.getDay());
-        if(ship.addContainer(container))
+        if (ship.addContainer(container))
             warehouse.removeContainer(containerNumber);
 
     }
 
-    static void moveContainerToWagonOrWarehouse(Warehouse warehouse, Wagon wagon, Port port){
+    static void moveContainerToWagonOrWarehouse(Warehouse warehouse, Wagon wagon, Port port) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wybierz statek z listy: ");
         port.showShips();
@@ -281,7 +280,7 @@ public class Main {
         ship.showContainers();
         System.out.println("Wybierz kontener i wpisz cyfrę odpowiadającą opcji: ");
         int containerNumber = scanner.nextInt();
-        ContainerInterface container = ship.getContainer(containerNumber);
+        Container container = ship.getContainer(containerNumber);
         System.out.println("Gdzie chcesz umieścić kontener: ");
         System.out.println("1. W wagonie ");
         System.out.println("2. W magazynie ");
@@ -289,11 +288,11 @@ public class Main {
         int x = scanner.nextInt();
         switch (x) {
             case 1:
-                if(wagon.addContainer(container))
+                if (wagon.addContainer(container))
                     ship.removeContainer(containerNumber);
                 break;
             case 2:
-                if(warehouse.addContainer(container))
+                if (warehouse.addContainer(container))
                     ship.removeContainer(containerNumber);
                 break;
             default:

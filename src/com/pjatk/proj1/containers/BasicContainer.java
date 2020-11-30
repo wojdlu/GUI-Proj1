@@ -4,11 +4,11 @@ import com.pjatk.proj1.Sender;
 
 import java.util.UUID;
 
-public class BasicContainer implements ContainerInterface{
+public class BasicContainer implements Container {
 
     protected double weightNetto;
     protected double weightBrutto;
-    protected final UUID ID = UUID.randomUUID();
+    protected UUID ID = UUID.randomUUID();
     protected Sender sender;
     protected int transportDay;
 
@@ -18,22 +18,31 @@ public class BasicContainer implements ContainerInterface{
         this.sender = sender;
     }
 
-    public BasicContainer(){}
+    public BasicContainer(double weightNetto, double weightBrutto, Sender sender, UUID ID, int day ){
+        this.weightNetto = weightNetto;
+        this.weightBrutto = weightBrutto;
+        this.sender = sender;
+        this.ID = ID;
+        this.transportDay = day;
+    }
+
+    public BasicContainer() {
+    }
 
     public double getWeight() {
 
         return weightBrutto;
     }
 
-    public void setTransportDay(int transportDay){
+    public void setTransportDay(int transportDay) {
         this.transportDay = transportDay;
     }
 
-    public int getTransportDay(){
+    public int getTransportDay() {
         return transportDay;
     }
 
-    public Sender getSender(){
+    public Sender getSender() {
         return sender;
     }
 
@@ -46,5 +55,15 @@ public class BasicContainer implements ContainerInterface{
                 ", sender=" + sender +
                 ", transportDay=" + transportDay +
                 '}';
+    }
+
+    @Override
+    public String toFile() {
+        return "BasicContainer:" +
+                weightNetto +
+                "," + weightBrutto +
+                "," + ID +
+                "," + sender.toFile() +
+                "," + transportDay;
     }
 }
